@@ -1,4 +1,4 @@
-# Dice Pig Game
+# Pig Dice Game
 
 
 ### GAME RULES:
