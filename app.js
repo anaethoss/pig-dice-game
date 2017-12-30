@@ -9,12 +9,12 @@ Change the game to follow these rules:
 3. Add another dice to the game, so that there are two dices now. The player looses his current score when one of them is a 1. (Hint: you will need CSS to position the second dice, so take a look at the CSS code for the first one.)
 */
 
-let scores, activePlayer, roundScore, gamePlaying, prevScore, winScore;
+let scores, activePlayer, roundScore, gamePlaying, prevScore;
 let rollBtn = document.querySelector(`button.btn-roll`);
 let diceImg = document.querySelector(`img.dice`);
+let diceImg2 = document.querySelector(`img.dice2`);
 let holdBtn = document.querySelector('.btn-hold');
 let newBtn  = document.querySelector('.btn-new');
-let scoreInput = document.querySelector('.win-score');
 
 init();
 
@@ -22,17 +22,21 @@ rollBtn.addEventListener('click', () => {
   if(gamePlaying) {
     // Generate Random number
     let dice = Math.floor(Math.random() * 6) + 1;
-    diceImg.src = `dice-${dice}.png`;
-    diceImg.style.display = 'block';
+    let dice2 = Math.ceil(Math.random() * 6);
 
-    if(dice !== 1) {
-      if(prevScore === 6 && prevScore === dice) {
+    diceImg.src = `dice-${dice}.png`;
+    diceImg2.src = `dice-${dice2}.png`;
+    diceImg.style.display = 'block';
+    diceImg2.style.display = 'block';
+
+    if(dice !== 1 && dice2 !== 1) {
+      if(prevScore === 12 && prevScore === (dice + dice2)) {
         changePlayer();
       } else {
         // add score
-        roundScore += dice;
+        roundScore += dice + dice2;
         document.getElementById(`current-${activePlayer}`).textContent = roundScore;
-        prevScore = dice;
+        prevScore = dice + dice2;
       }
     } else {
       // next player
@@ -45,6 +49,7 @@ rollBtn.addEventListener('click', () => {
 
 holdBtn.addEventListener('click', () => {
   if(gamePlaying) {
+    let winScore = document.querySelector('.win-score').value || 100;
     // Add current score to global score
     scores[activePlayer] += roundScore;
 
@@ -69,6 +74,7 @@ function winner_masala() {
   //document.querySelector(`.player-${activePlayer}-panel`).classList.add('winner');
   document.getElementById(`current-${activePlayer}`).textContent = 0;
   diceImg.style.display = 'none';
+  diceImg2.style.display = 'none';
   gamePlaying = false;
 
   winner_background();
@@ -103,6 +109,7 @@ function changePlayer() {
   document.querySelector('.player-1-panel').classList.toggle('active');
 
   diceImg.style.display = 'none';
+  diceImg2.style.display = 'none';
   // document.querySelector('.player-0-panel').classList.remove('active');
   // document.querySelector('.player-1-panel').classList.add('active');
 }
@@ -113,7 +120,6 @@ function init() {
   roundScore = 0;
   gamePlaying = true;
   backgrounds = ['red', 'green', 'blue', 'yellow', '#f7f7f7'];
-  winScore = scoreInput.value || 100;
 
   
   document.querySelector('.player-0-panel').classList.remove('winner');
@@ -128,8 +134,5 @@ function init() {
   document.getElementById('name-0').textContent = 'Player 1';
   document.getElementById('name-1').textContent = 'Player 2';
   diceImg.style.display = 'none';
+  diceImg2.style.display = 'none';
 }
-
-scoreInput.addEventListener('change', () => {
-  winScore = scoreInput.value;
-});
