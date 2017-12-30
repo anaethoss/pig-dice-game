@@ -35,7 +35,7 @@ holdBtn.addEventListener('click', () => {
     // Update UI
     document.getElementById(`score-${activePlayer}`).textContent = scores[activePlayer];
     // Check if the current user won the game
-    if(scores[activePlayer] >= 100) {
+    if(scores[activePlayer] >= 10) {
       document.querySelector(`#name-${activePlayer}`).textContent = 'Winner';
       document.querySelector(`.player-${activePlayer}-panel`).classList.remove('active');
       document.querySelector(`.player-${activePlayer}-panel`).classList.add('winner');
