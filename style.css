@@ -173,3 +173,25 @@ i {
   font-weight: 300;
   color: #EB4D4D;
 }
+
+.win-score {
+  width: 140px;
+  padding: 8px;
+  text-transform: uppercase;
+  border: 1px solid #c5c5c5;
+  background: transparent;
+  position: absolute;
+  top: 520px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  font-family: Lato;
+  font-weight: 300;
+  text-align: center;
+}
+
+.win-score:active,
+.win-score:focus {
+  outline: 0 none;
+  border-color: #b0b0b0;
+}

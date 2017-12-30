@@ -9,11 +9,12 @@ Change the game to follow these rules:
 3. Add another dice to the game, so that there are two dices now. The player looses his current score when one of them is a 1. (Hint: you will need CSS to position the second dice, so take a look at the CSS code for the first one.)
 */
 
-let scores, activePlayer, roundScore, gamePlaying, prevScore;
+let scores, activePlayer, roundScore, gamePlaying, prevScore, winScore;
 let rollBtn = document.querySelector(`button.btn-roll`);
 let diceImg = document.querySelector(`img.dice`);
 let holdBtn = document.querySelector('.btn-hold');
 let newBtn  = document.querySelector('.btn-new');
+let scoreInput = document.querySelector('.win-score');
 
 init();
 
@@ -50,7 +51,7 @@ holdBtn.addEventListener('click', () => {
     // Update UI
     document.getElementById(`score-${activePlayer}`).textContent = scores[activePlayer];
     // Check if the current user won the game
-    if(scores[activePlayer] >= 100) {
+    if(scores[activePlayer] >= winScore) {
         winner_masala();
     } else {
       // Next Player
@@ -112,6 +113,7 @@ function init() {
   roundScore = 0;
   gamePlaying = true;
   backgrounds = ['red', 'green', 'blue', 'yellow', '#f7f7f7'];
+  winScore = scoreInput.value || 100;
 
   
   document.querySelector('.player-0-panel').classList.remove('winner');
@@ -127,3 +129,7 @@ function init() {
   document.getElementById('name-1').textContent = 'Player 2';
   diceImg.style.display = 'none';
 }
+
+scoreInput.addEventListener('change', () => {
+  winScore = scoreInput.value;
+});
