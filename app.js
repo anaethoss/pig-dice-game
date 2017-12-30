@@ -75,7 +75,7 @@ function winner_masala() {
 function winner_background() {
   var doer = setInterval(function(){
     change_background()
-  }, 150);
+  }, 100);
 
   var counter = 0;
   function change_background() {
@@ -108,7 +108,7 @@ function init() {
   activePlayer = 0;
   roundScore = 0;
   gamePlaying = true;
-  backgrounds = ['red', 'green', 'blue', 'yellow', '#f7f7f7'];
+  backgrounds = ['#e74c3c', '#27ae60', '#2980b9', '#f1c40f', '#f7f7f7'];
 
   
   document.querySelector('.player-0-panel').classList.remove('winner');
