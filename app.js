@@ -1,4 +1,4 @@
-let scores, activePlayer, roundScore, gamePlaying;
+let scores, activePlayer, roundScore, gamePlaying, backgrounds;
 let rollBtn = document.querySelector(`button.btn-roll`);
 let diceImg = document.querySelector(`img.dice`);
 let holdBtn = document.querySelector('.btn-hold');
@@ -36,12 +36,7 @@ holdBtn.addEventListener('click', () => {
     document.getElementById(`score-${activePlayer}`).textContent = scores[activePlayer];
     // Check if the current user won the game
     if(scores[activePlayer] >= 10) {
-      document.querySelector(`#name-${activePlayer}`).textContent = 'Winner';
-      document.querySelector(`.player-${activePlayer}-panel`).classList.remove('active');
-      document.querySelector(`.player-${activePlayer}-panel`).classList.add('winner');
-      document.getElementById(`current-${activePlayer}`).textContent = 0;
-      diceImg.style.display = 'none';
-      gamePlaying = false;
+        winner_masala();
     } else {
       // Next Player
       changePlayer();
@@ -51,8 +46,35 @@ holdBtn.addEventListener('click', () => {
 
 newBtn.addEventListener('click', init);
 
+//handles display rendering when a player wins
+function winner_masala() {
+  document.querySelector(`#name-${activePlayer}`).textContent = 'Winner';
+  document.querySelector(`.player-${activePlayer}-panel`).classList.remove('active');
+  //document.querySelector(`.player-${activePlayer}-panel`).classList.add('winner');
+  document.getElementById(`current-${activePlayer}`).textContent = 0;
+  diceImg.style.display = 'none';
+  gamePlaying = false;
 
+  winner_background();
 
+  document.querySelector(`.player-${activePlayer}-panel`).classList.add('winner');
+}
+
+//twinkles couples of background color 
+function winner_background() {
+  var doer = setInterval(function(){
+    change_background()
+  }, 150);
+
+  var counter = 0;
+  function change_background() {
+    counter++;
+    if (counter === backgrounds.length) {
+      clearInterval(doer);
+    }
+    document.querySelector(`.player-${activePlayer}-panel`).style.backgroundColor = backgrounds[counter];
+  }
+}
 
 function changePlayer() {
   activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
@@ -73,6 +95,8 @@ function init() {
   activePlayer = 0;
   roundScore = 0;
   gamePlaying = true;
+  backgrounds = ['red', 'green', 'blue', 'yellow', '#f7f7f7'];
+
   
   document.querySelector('.player-0-panel').classList.remove('winner');
   document.querySelector('.player-1-panel').classList.remove('winner');
