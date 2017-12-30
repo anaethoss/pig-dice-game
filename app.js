@@ -9,7 +9,7 @@ Change the game to follow these rules:
 3. Add another dice to the game, so that there are two dices now. The player looses his current score when one of them is a 1. (Hint: you will need CSS to position the second dice, so take a look at the CSS code for the first one.)
 */
 
-let scores, activePlayer, roundScore, gamePlaying;
+let scores, activePlayer, roundScore, gamePlaying, prevScore;
 let rollBtn = document.querySelector(`button.btn-roll`);
 let diceImg = document.querySelector(`img.dice`);
 let holdBtn = document.querySelector('.btn-hold');
@@ -21,14 +21,18 @@ rollBtn.addEventListener('click', () => {
   if(gamePlaying) {
     // Generate Random number
     let dice = Math.floor(Math.random() * 6) + 1;
-    
     diceImg.src = `dice-${dice}.png`;
     diceImg.style.display = 'block';
 
     if(dice !== 1) {
-      // add score
-      roundScore += dice;
-      document.getElementById(`current-${activePlayer}`).textContent = roundScore;
+      if(prevScore === 6 && prevScore === dice) {
+        changePlayer();
+      } else {
+        // add score
+        roundScore += dice;
+        document.getElementById(`current-${activePlayer}`).textContent = roundScore;
+        prevScore = dice;
+      }
     } else {
       // next player
       changePlayer();
@@ -46,7 +50,7 @@ holdBtn.addEventListener('click', () => {
     // Update UI
     document.getElementById(`score-${activePlayer}`).textContent = scores[activePlayer];
     // Check if the current user won the game
-    if(scores[activePlayer] >= 10) {
+    if(scores[activePlayer] >= 100) {
         winner_masala();
     } else {
       // Next Player
@@ -90,6 +94,7 @@ function winner_background() {
 function changePlayer() {
   activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
   roundScore = 0;
+  prevScore = 0;
   document.getElementById(`current-0`).textContent = 0;
   document.getElementById(`current-1`).textContent = 0;
 
